@@ -10,7 +10,8 @@ TouchCursor allows you to use letter keys as navigation keys if you hold down th
 | k | down |
 | j | left |
 | l | right |
-| p | delete |
+| p | backward delete (most used) |
+| m | forward delete |
 | h | return |
 | u | home |
 | o | end |

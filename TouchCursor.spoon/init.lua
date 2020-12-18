@@ -41,6 +41,7 @@ function obj:init()
             return true
         end
         if self.spaceDown then
+            local newModifier = nil
             local newKey = nil
             if currKey == "i" then
                 newKey = "up"
@@ -58,12 +59,21 @@ function obj:init()
                 newKey = "home"
             elseif currKey == "h" then
                 newKey = "return"
+            elseif currKey == "m" then
+                newKey = "d"
+                newModifier = hs.keycodes.map.ctrl
             end
             if newKey ~= nil then
                 self.produceSpace = false
                 self.normalKey = newKey
+                if newModifier ~= nil then
+                    hs.eventtap.event.newKeyEvent(newModifier, true):post()
+                end
                 hs.eventtap.event.newKeyEvent(newKey, true):post()
                 hs.eventtap.event.newKeyEvent(newKey, false):post()
+                if newModifier ~= nil then
+                    hs.eventtap.event.newKeyEvent(newModifier, false):post()
+                end
                 return true
             end
         end
