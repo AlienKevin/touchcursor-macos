@@ -41,28 +41,22 @@ function obj:init()
             return true
         end
         if self.spaceDown then
-            local newModifier = nil
-            local newKey = nil
-            if currKey == "i" then
-                newKey = "up"
-            elseif currKey == "j" then
-                newKey = "left"
-            elseif currKey == "k" then
-                newKey = "down"
-            elseif currKey == "l" then
-                newKey = "right"
-            elseif currKey == "p" then
-                newKey = "delete"
-            elseif currKey == "o" then
-                newKey = "end"
-            elseif currKey == "u" then
-                newKey = "home"
-            elseif currKey == "h" then
-                newKey = "return"
-            elseif currKey == "m" then
-                newKey = "d"
-                newModifier = hs.keycodes.map.ctrl
-            end
+            local keyTable = {
+                ["i"] = "up",
+                ["j"] = "left",
+                ["k"] = "down",
+                ["l"] = "right",
+                ["p"] = "delete",
+                ["o"] = "end",
+                ["u"] = "home",
+                ["h"] = "return",
+                ["m"] = "d"
+            }
+            local modifierTable = {
+                ["m"] = hs.keycodes.map.ctrl
+            }
+            local newKey = keyTable[currKey]
+            local newModifier = modifierTable[currKey]
             if newKey ~= nil then
                 self.produceSpace = false
                 self.normalKey = newKey
