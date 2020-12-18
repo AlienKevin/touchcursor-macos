@@ -16,6 +16,8 @@ TouchCursor allows you to use letter keys as navigation keys if you hold down th
 | u | home |
 | o | end |
 
+Note: The shift key works well in combination with the above shortcuts. However, the ctrl key does not work as of now.
+
 # Installation
 
 1. TouchCursor relies on the open source automation tool Hammerspoon to operate. If you already have it installed, skip to the next step.
