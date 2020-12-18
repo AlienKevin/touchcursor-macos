@@ -18,11 +18,23 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 obj.spaceDown = false
 obj.normalKey = ""
 obj.produceSpace = true
+obj.modifiersDown = {}
+
+-- Source: https://stackoverflow.com/a/641993/6798201
+function table.shallowCopy(t)
+    local t2 = {}
+    for k,v in pairs(t) do
+      t2[k] = v
+    end
+    return t2
+end
 
 -- listen to keypress on modifiers
--- eventtap.new({events.flagsChanged}, function(event)
---     print(event:getFlags())
--- end):start()
+hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
+    obj.modifiersDown = event:getFlags()
+    print("obj.modifiersDown[\"ctrl\"] " .. tostring(obj.modifiersDown["ctrl"]))
+    print("obj.modifiersDown[\"shift\"] " .. tostring(obj.modifiersDown["shift"]))
+end):start()
 
 function obj:init()
     hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
@@ -52,22 +64,21 @@ function obj:init()
                 ["h"] = "return",
                 ["m"] = "d"
             }
-            local modifierTable = {
-                ["m"] = hs.keycodes.map.ctrl
-            }
             local newKey = keyTable[currKey]
-            local newModifier = modifierTable[currKey]
+            local newModifiers = table.shallowCopy(obj.modifiersDown)
             if newKey ~= nil then
                 self.produceSpace = false
                 self.normalKey = newKey
-                if newModifier ~= nil then
-                    hs.eventtap.event.newKeyEvent(newModifier, true):post()
+                -- print("newModifiers[\"ctrl\"] " .. tostring(newModifiers["ctrl"]))
+                -- print("newModifiers[\"shift\"] " .. tostring(newModifiers["shift"]))
+                if currKey == "m" then
+                    newModifiers["ctrl"] = true
                 end
-                hs.eventtap.event.newKeyEvent(newKey, true):post()
-                hs.eventtap.event.newKeyEvent(newKey, false):post()
-                if newModifier ~= nil then
-                    hs.eventtap.event.newKeyEvent(newModifier, false):post()
+                hs.eventtap.event.newKeyEvent(newKey, true):setFlags(newModifiers):post()
+                if currKey == "m" then
+                    newModifiers["ctrl"] = false
                 end
+                hs.eventtap.event.newKeyEvent(newKey, false):setFlags(newModifiers):post()
                 return true
             end
         end
