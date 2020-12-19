@@ -30,14 +30,14 @@ function table.shallowCopy(t)
 end
 
 -- listen to keypress on modifiers
-hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
+obj._flagWatcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
     obj.modifiersDown = event:getFlags()
     print("obj.modifiersDown[\"ctrl\"] " .. tostring(obj.modifiersDown["ctrl"]))
     print("obj.modifiersDown[\"shift\"] " .. tostring(obj.modifiersDown["shift"]))
 end):start()
 
 function obj:init()
-    hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+    self._downWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
         -- print(currKey .. " is down".." normalKey is " .. normalKey)
         if currKey == self.normalKey then
@@ -85,7 +85,7 @@ function obj:init()
         return false
     end):start()
 
-    hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
+    self._upWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
         -- print(currKey .. " is up".." normalKey is " .. normalKey)
         if currKey == self.normalKey then
