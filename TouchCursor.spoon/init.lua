@@ -15,17 +15,16 @@ obj.author = "Kevin Li <kevinli020508@gmail.com>"
 obj.homepage = "https://github.com/AlienKevin/touchcursor-macos"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
-obj.spaceDown = false
-obj.normalKey = ""
-obj.produceSpace = true
-obj.modifiersDown = {}
+obj.spaceDown = false -- whether the space key is currently pressed down
+obj.normalKey = "" -- the key to be treated normally (by passing custom key event logic)
+obj.produceSpace = true -- whether to produce a space down and up or not
+obj.modifiersDown = {} -- modifiers currently pressed down
 
-local STOP = true
-local GO = false
-local DOWN = true
-local UP = false
+local STOP = true -- stop key event from propagating further
+local GO = false -- allow key event to propagate further
+local DOWN = true -- key down event
+local UP = false -- key up event
 
--- Source: https://stackoverflow.com/a/641993/6798201
 function table.shallowCopy(t)
     local t2 = {}
     for k,v in pairs(t) do
@@ -41,6 +40,7 @@ obj._flagWatcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, funct
 end):start()
 
 function obj:init()
+    -- listen to key down
     self._downWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
         if currKey == self.normalKey then
@@ -89,6 +89,7 @@ function obj:init()
         return GO
     end):start()
 
+    -- listen to key up
     self._upWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
         if currKey == self.normalKey then
@@ -115,6 +116,7 @@ function obj:init()
     end):start()
 end
 
+-- pretty-print the modifiers table produced by event:getFlags()
 function dump(o)
     if type(o) == 'table' then
         local s = '{ '
