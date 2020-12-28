@@ -37,22 +37,23 @@ end
 -- listen to keypress on modifiers
 obj._flagWatcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
     obj.modifiersDown = event:getFlags()
-    print("obj.modifiersDown[\"ctrl\"] " .. tostring(obj.modifiersDown["ctrl"]))
-    print("obj.modifiersDown[\"shift\"] " .. tostring(obj.modifiersDown["shift"]))
+    -- print("Pressed: " .. dump(obj.modifiersDown))
 end):start()
 
 function obj:init()
     self._downWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
-        -- print(currKey .. " is down".." normalKey is " .. normalKey)
         if currKey == self.normalKey then
             if self.normalKey == "space" then
-                -- print("generate space up")
-                hs.eventtap.event.newKeyEvent("space", UP):post()
+                -- print("Lift up " .. dump(obj.modifiersDown) .. " + space")
+                hs.eventtap.event.newKeyEvent("space", UP):setFlags(self.modifiersDown):post()
             end
             return GO
         end
         if currKey == "space" then
+            if self.modifiersDown["cmd"] then
+                return GO
+            end
             self.spaceDown = true
             self.produceSpace = true
             return STOP
@@ -74,8 +75,6 @@ function obj:init()
             if newKey ~= nil then
                 self.produceSpace = false
                 self.normalKey = newKey
-                -- print("newModifiers[\"ctrl\"] " .. tostring(newModifiers["ctrl"]))
-                -- print("newModifiers[\"shift\"] " .. tostring(newModifiers["shift"]))
                 if currKey == "m" then
                     newModifiers["ctrl"] = true
                 end
@@ -92,23 +91,43 @@ function obj:init()
 
     self._upWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
         local currKey = hs.keycodes.map[event:getKeyCode()]
-        -- print(currKey .. " is up".." normalKey is " .. normalKey)
         if currKey == self.normalKey then
             self.normalKey = ""
+            if currKey == "space" and next(self.modifiersDown) ~= nil then
+                return STOP
+            end
             return GO
         end
         if currKey == "space" then
+            if self.modifiersDown["cmd"] then
+                return GO
+            end
             self.spaceDown = false
             self.normalKey = ""
             if self.produceSpace then
                 self.normalKey = "space"
-                -- print("generate space down")
-                hs.eventtap.event.newKeyEvent("space", DOWN):post()
+                -- print("Press " .. dump(obj.modifiersDown) .. " + space")
+                hs.eventtap.event.newKeyEvent("space", DOWN):setFlags(self.modifiersDown):post()
                 return STOP
             end
         end
         return GO
     end):start()
+end
+
+function dump(o)
+    if type(o) == 'table' then
+        local s = '{ '
+        for k,v in pairs(o) do
+            if type(k) ~= 'number' then k = k end
+            if v then
+                s = s .. dump(k) .. ', '
+            end
+        end
+        return s .. '}'
+    else
+       return tostring(o)
+    end
 end
 
 return obj
