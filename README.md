@@ -2,21 +2,50 @@
 
 Speed up text edits and navigations by using the space bar as a modifier key (while still letting you type spaces).
 
-TouchCursor allows you to use letter keys as navigation keys if you hold down the space bar at the same time:
+## Basics
 
-| letter | navigation |
+| keys | functionality |
 |-------|----------|
-| i | up |
-| k | down |
-| j | left |
-| l | right |
-| p | backward delete (most used) |
-| m | forward delete |
-| h | return |
-| u | home |
-| o | end |
+| ␣ + i | up (↑) |
+| ␣ + k | down (↓) |
+| ␣ + j | left (←) |
+| ␣ + l | right (→) |
+| ␣ + p | backward delete (⌫) |
+| ␣ + m | forward delete |
+| ␣ + h | return (↩) |
+| ␣ + u | home |
+| ␣ + o | end |
 
-Note: The shift key works well in combination with the above shortcuts. However, the ctrl key does not work as of now.
+## Advanced
+
+### Character Level
+| keys | functionality |
+|-----|---------------|
+| ␣ + ⇧ + j | Select one character to the left |
+| ␣ + ⇧ + l | Select one character to the right |
+
+### Word Level
+
+| keys | functionality |
+|-----|---------------|
+| ␣ + ⌥ + j | Go to start of word |
+| ␣ + ⌥ + l | Go to end of word |
+| ␣ + ⇧ + ⌥ + j | Select up to start of word |
+| ␣ + ⇧ + ⌥ + l | Select up to end of word |
+
+### Line Level
+| keys | functionality |
+|-----|---------------|
+| ␣ + ⇧ + u | Select up to start of line |
+| ␣ + ⇧ + o | Select up to end of line |
+
+### Page Level
+| keys | functionality |
+|-----|---------------|
+| ␣ + ⌘ + i | Go to start of page |
+| ␣ + ⌘ + k | Go to end of page |
+
+
 
 # Installation
 
