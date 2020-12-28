@@ -20,6 +20,11 @@ obj.normalKey = ""
 obj.produceSpace = true
 obj.modifiersDown = {}
 
+local STOP = true
+local GO = false
+local DOWN = true
+local UP = false
+
 -- Source: https://stackoverflow.com/a/641993/6798201
 function table.shallowCopy(t)
     local t2 = {}
@@ -43,14 +48,14 @@ function obj:init()
         if currKey == self.normalKey then
             if self.normalKey == "space" then
                 -- print("generate space up")
-                hs.eventtap.event.newKeyEvent("space", false):post()
+                hs.eventtap.event.newKeyEvent("space", UP):post()
             end
-            return false
+            return GO
         end
         if currKey == "space" then
             self.spaceDown = true
             self.produceSpace = true
-            return true
+            return STOP
         end
         if self.spaceDown then
             local keyTable = {
@@ -74,15 +79,15 @@ function obj:init()
                 if currKey == "m" then
                     newModifiers["ctrl"] = true
                 end
-                hs.eventtap.event.newKeyEvent(newKey, true):setFlags(newModifiers):post()
+                hs.eventtap.event.newKeyEvent(newKey, DOWN):setFlags(newModifiers):post()
                 if currKey == "m" then
                     newModifiers["ctrl"] = false
                 end
-                hs.eventtap.event.newKeyEvent(newKey, false):setFlags(newModifiers):post()
-                return true
+                hs.eventtap.event.newKeyEvent(newKey, UP):setFlags(newModifiers):post()
+                return STOP
             end
         end
-        return false
+        return GO
     end):start()
 
     self._upWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
@@ -90,7 +95,7 @@ function obj:init()
         -- print(currKey .. " is up".." normalKey is " .. normalKey)
         if currKey == self.normalKey then
             self.normalKey = ""
-            return false
+            return GO
         end
         if currKey == "space" then
             self.spaceDown = false
@@ -98,11 +103,11 @@ function obj:init()
             if self.produceSpace then
                 self.normalKey = "space"
                 -- print("generate space down")
-                hs.eventtap.event.newKeyEvent("space", true):post()
-                return true
+                hs.eventtap.event.newKeyEvent("space", DOWN):post()
+                return STOP
             end
         end
-        return false
+        return GO
     end):start()
 end
 
