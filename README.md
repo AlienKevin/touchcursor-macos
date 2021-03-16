@@ -6,45 +6,45 @@ Speed up text edits and navigations by using the space bar as a modifier key (wh
 
 | keys | functionality |
 |-------|----------|
-| ␣ + i | up (↑) |
-| ␣ + k | down (↓) |
-| ␣ + j | left (←) |
-| ␣ + l | right (→) |
-| ␣ + p | backward delete (⌫) |
-| ␣ + m | forward delete |
-| ␣ + h | return (↩) |
-| ␣ + u | home |
-| ␣ + o | end |
-| ␣ + q | escape (esc) |
+| ␣ i | up (↑) |
+| ␣ k | down (↓) |
+| ␣ j | left (←) |
+| ␣ l | right (→) |
+| ␣ p | backward delete (⌫) |
+| ␣ m | forward delete |
+| ␣ h | return (↩) |
+| ␣ u | home |
+| ␣ o | end |
+| ␣ q | escape (esc) |
 
 ## Advanced
 
 ### Character Level
 | keys | functionality |
 |-----|---------------|
-| ␣ + ⇧ + j | Select one character to the left |
-| ␣ + ⇧ + l | Select one character to the right |
+| ␣ ⇧ j | Select one character to the left |
+| ␣ ⇧ l | Select one character to the right |
 
 ### Word Level
 
 | keys | functionality |
 |-----|---------------|
-| ␣ + ⌥ + j | Go to start of word |
-| ␣ + ⌥ + l | Go to end of word |
-| ␣ + ⇧ + ⌥ + j | Select up to start of word |
-| ␣ + ⇧ + ⌥ + l | Select up to end of word |
+| ␣ ⌥ j | Go to start of word |
+| ␣ ⌥ l | Go to end of word |
+| ␣ ⇧ ⌥ j | Select up to start of word |
+| ␣ ⇧ ⌥ l | Select up to end of word |
 
 ### Line Level
 | keys | functionality |
 |-----|---------------|
-| ␣ + ⇧ + u | Select up to start of line |
-| ␣ + ⇧ + o | Select up to end of line |
+| ␣ ⇧ u | Select up to start of line |
+| ␣ ⇧ o | Select up to end of line |
 
 ### Page Level
 | keys | functionality |
 |-----|---------------|
-| ␣ + ⌘ + i | Go to start of page |
-| ␣ + ⌘ + k | Go to end of page |
+| ␣ ⌘ i | Go to start of page |
+| ␣ ⌘ k | Go to end of page |
 
 
 
