@@ -15,6 +15,7 @@ Speed up text edits and navigations by using the space bar as a modifier key (wh
 | ␣ + h | return (↩) |
 | ␣ + u | home |
 | ␣ + o | end |
+| ␣ + q | escape (esc) |
 
 ## Advanced
 

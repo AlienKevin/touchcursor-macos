@@ -68,7 +68,8 @@ function obj:init()
                 ["o"] = "end",
                 ["u"] = "home",
                 ["h"] = "return",
-                ["m"] = "d"
+                ["m"] = "d",
+                ["q"] = "escape",
             }
             local newKey = keyTable[currKey]
             local newModifiers = table.shallowCopy(obj.modifiersDown)
